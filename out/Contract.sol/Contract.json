@@ -1,0 +1,108 @@
+{
+  "abi": [],
+  "bytecode": {
+    "object": "0x6080604052348015600f57600080fd5b50603f80601d6000396000f3fe6080604052600080fdfea264697066735822122013b926efdcf4299723c72e1921ec27fba6e9609a1fb2d9986d1f516410b70d4d64736f6c634300080f0033",
+    "sourceMap": "65:20:7:-:0;;;;;;;;;;;;;;;;;;;",
+    "linkReferences": {}
+  },
+  "deployedBytecode": {
+    "object": "0x6080604052600080fdfea264697066735822122013b926efdcf4299723c72e1921ec27fba6e9609a1fb2d9986d1f516410b70d4d64736f6c634300080f0033",
+    "sourceMap": "65:20:7:-:0;;;;;",
+    "linkReferences": {}
+  },
+  "methodIdentifiers": {},
+  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.15+commit.e14f2714\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"src/Contract.sol\":\"Contract\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\":ds-test/=lib/forge-std/lib/ds-test/src/\",\":forge-std/=lib/forge-std/src/\"]},\"sources\":{\"src/Contract.sol\":{\"keccak256\":\"0x88c53f90b24a07c57711738987ddc81838a43c4ab7b6ce2986f1b470500ebe86\",\"license\":\"UNLICENSED\",\"urls\":[\"bzz-raw://58178e99c552a2042318a4be96c35abdda48f5a1537a5c5c27c234b5dda43f2f\",\"dweb:/ipfs/QmTgVWYsTQyBx7PsNtmUaryTF27cjLQseyk4sxYGChd5ui\"]}},\"version\":1}",
+  "metadata": {
+    "compiler": {
+      "version": "0.8.15+commit.e14f2714"
+    },
+    "language": "Solidity",
+    "output": {
+      "abi": [],
+      "devdoc": {
+        "kind": "dev",
+        "methods": {},
+        "version": 1
+      },
+      "userdoc": {
+        "kind": "user",
+        "methods": {},
+        "version": 1
+      }
+    },
+    "settings": {
+      "remappings": [
+        ":ds-test/=lib/forge-std/lib/ds-test/src/",
+        ":forge-std/=lib/forge-std/src/"
+      ],
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "metadata": {
+        "bytecodeHash": "ipfs"
+      },
+      "compilationTarget": {
+        "src/Contract.sol": "Contract"
+      },
+      "libraries": {}
+    },
+    "sources": {
+      "src/Contract.sol": {
+        "keccak256": "0x88c53f90b24a07c57711738987ddc81838a43c4ab7b6ce2986f1b470500ebe86",
+        "urls": [
+          "bzz-raw://58178e99c552a2042318a4be96c35abdda48f5a1537a5c5c27c234b5dda43f2f",
+          "dweb:/ipfs/QmTgVWYsTQyBx7PsNtmUaryTF27cjLQseyk4sxYGChd5ui"
+        ],
+        "license": "UNLICENSED"
+      }
+    },
+    "version": 1
+  },
+  "ast": {
+    "absolutePath": "src/Contract.sol",
+    "id": 22,
+    "exportedSymbols": {
+      "Contract": [
+        21
+      ]
+    },
+    "nodeType": "SourceUnit",
+    "src": "39:47:7",
+    "nodes": [
+      {
+        "id": 20,
+        "nodeType": "PragmaDirective",
+        "src": "39:24:7",
+        "nodes": [],
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".13"
+        ]
+      },
+      {
+        "id": 21,
+        "nodeType": "ContractDefinition",
+        "src": "65:20:7",
+        "nodes": [],
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "Contract",
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "fullyImplemented": true,
+        "linearizedBaseContracts": [
+          21
+        ],
+        "name": "Contract",
+        "nameLocation": "74:8:7",
+        "scope": 22,
+        "usedErrors": []
+      }
+    ],
+    "license": "UNLICENSED"
+  },
+  "id": 7
+}
