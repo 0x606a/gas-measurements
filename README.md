@@ -142,7 +142,7 @@ Foundry will show you a comprehensive gas report about your contracts. It return
 In order to generate a gas report run the following command in your terminal:
 
 ```sh
-forge test –gas-report
+forge test -–gas-report
 ```
 
 It looks at **all** the tests that make a call to a given function and records the associated gas costs. For example, if something calls a function and it reverts, that's probably the `min` value. Another example is the `max` value that is generated usually during the first call of the function (as it has to initialise storage, variables, etc.)
