@@ -52,52 +52,6 @@ For examples and guides on using this image, see the [Docker section](https://bo
 
 You can manually download nightly releases [here](https://github.com/foundry-rs/foundry/releases).
 
-## about Forge
-
-### Features
-
--   **Fast & flexible compilation pipeline**
-    -   Automatic Solidity compiler version detection & installation (under `~/.svm`)
-    -   **Incremental compilation & caching**: Only changed files are re-compiled
-    -   Parallel compilation
-    -   Non-standard directory structures support (e.g. [Hardhat repos](https://twitter.com/gakonst/status/1461289225337421829))
--   **Tests are written in Solidity** (like in DappTools)
--   **Fast fuzz testing** with shrinking of inputs & printing of counter-examples
--   **Fast remote RPC forking mode**, leveraging Rust's async infrastructure like tokio
--   **Flexible debug logging**
-    -   DappTools-style, using `DsTest`'s emitted logs
-    -   Hardhat-style, using the popular `console.sol` contract
--   **Portable (5-10MB) & easy to install** without requiring Nix or any other package manager
--   **Fast CI** with the [Foundry GitHub action][foundry-gha].
-
-### How Fast?
-
-Forge is quite fast at both compiling (leveraging [ethers-solc][ethers-solc]) and testing.
-
-See the benchmarks below. More benchmarks can be found in the [v0.2.0 announcement post][benchmark-post] and in the [Convex Shutdown Simulation][convex] repository.
-
-**Testing Benchmarks**
-
-| Project                            | Forge | DappTools | Speedup |
-| ---------------------------------- | ----- | --------- | ------- |
-| [transmissions11/solmate][solmate] | 2.8s  | 6m34s     | 140x    |
-| [reflexer-labs/geb][geb]           | 0.4s  | 23s       | 57.5x   |
-| [Rari-Capital/vaults][vaults]      | 0.28s | 6.5s      | 23x     |
-
-_Note: In the above benchmarks, compilation was always skipped_
-
-**Compilation Benchmarks**
-
-<img alt="Compilation benchmarks" src=".github/compilation-benchmark.png" width="693px" />
-
-**Takeaway: Forge compilation is consistently faster by a factor of 1.7-11.3x, depending on the amount of caching involved.**
-
-## Cast
-
-Cast is a swiss army knife for interacting with Ethereum applications from the command line.
-
-More documentation can be found in the [cast package](./cast).
-
 ## Configuration
 
 ### Using `foundry.toml`
@@ -113,6 +67,83 @@ You can select another profile using the `FOUNDRY_PROFILE` environment variable.
 To see your current configuration, run `forge config`. To see only basic options (as set with `forge init`), run `forge config --basic`. This can be used to create a new `foundry.toml` file with `forge config --basic > foundry.toml`.
 
 By default `forge config` shows the currently selected foundry profile and its values. It also accepts the same arguments as `forge build`.
+
+# `forge`
+
+Forge is a fast and flexible Ethereum testing framework, inspired by
+[Dapp](https://github.com/dapphub/dapptools/tree/master/src/dapp).
+
+If you are looking into how to consume the software as an end user, check the
+[CLI README](../cli/README.md).
+
+For more context on how the package works under the hood, look in the
+[code docs](./src/lib.rs).
+
+**Need help with Forge? Read the [📖 Foundry Book (Forge Guide)][foundry-book-forge-guide] (WIP)!**
+
+[foundry-book-forge-guide]: https://book.getfoundry.sh/forge/
+
+## Why?
+
+### Write your tests in Solidity to minimize context switching
+
+Writing tests in Javascript/Typescript while writing your smart contracts in
+Solidity can be confusing. Forge lets you write your tests in Solidity, so you
+can focus on what matters.
+
+```solidity
+contract Foo {
+    uint256 public x = 1;
+    function set(uint256 _x) external {
+        x = _x;
+    }
+    function double() external {
+        x = 2 * x;
+    }
+}
+contract FooTest {
+    Foo foo;
+    // The state of the contract gets reset before each
+    // test is run, with the `setUp()` function being called
+    // each time after deployment.
+    function setUp() public {
+        foo = new Foo();
+    }
+    // A simple unit test
+    function testDouble() public {
+        require(foo.x() == 1);
+        foo.double();
+        require(foo.x() == 2);
+    }
+}
+```
+
+### Fuzzing: Go beyond unit testing
+
+When testing smart contracts, fuzzing can uncover edge cases which would be hard
+to manually detect with manual unit testing. We support fuzzing natively, where
+any test function that takes >0 arguments will be fuzzed, using the
+[proptest](https://docs.rs/proptest/1.0.0/proptest/) crate.
+
+An example of how a fuzzed test would look like can be seen below:
+
+```solidity
+function testDoubleWithFuzzing(uint256 x) public {
+    foo.set(x);
+    require(foo.x() == x);
+    foo.double();
+    require(foo.x() == 2 * x);
+}
+```
+### Gas Report
+
+Foundry will show you a comprehensive gas report about your contracts. It returns the `min`, `average`, `median` and, `max` gas cost for every function.
+
+It looks at **all** the tests that make a call to a given function and records the associated gas costs. For example, if something calls a function and it reverts, that's probably the `min` value. Another example is the `max` value that is generated usually during the first call of the function (as it has to initialise storage, variables, etc.)
+
+Usually, the `median` value is what your users will probably end up paying. `max` and `min` concern edge cases that you might want to explicitly test against, but users will probably never encounter.
+
+<img width="626" alt="image" src="https://user-images.githubusercontent.com/13405632/155415392-3ef61d67-8952-40e1-a509-24a8bf18fa80.png">
 
 ### DappTools Compatibility
 
